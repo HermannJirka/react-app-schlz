@@ -1,7 +1,14 @@
 import React from 'react';
 
-const person = () => {
-    return <p>I am the big dick person</p>
-};
+import './Person.css';
+const person = (props) => {
+    return (
+        <div className="Person">
+        <p onClick={props.click}>This is my first function, I am {props.name} and I am {props.age} years old</p>
+        <p>{props.children}</p>
+        <input type="text" onChange={props.changed} value={props.name}></input>
+        </div>
+        )
+    };
 
 export default person;
