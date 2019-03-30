@@ -44,19 +44,22 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px"
+      backgroundColor: 'green',
+      color: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px'
     };
 
     let persons = null;
-
+    let classesP = [];
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person,index) => {
-          
+            if(index % 2 === 0){
+              classesP.push('bckcolor')
+            }
             return (
               <Person
                 click={() => this.deletePersonHandler(index)}
@@ -64,17 +67,31 @@ class App extends Component {
                 age={person.age}
                 key={person.id}
                 changed={(event) => this.nameChangeHandler(event,person.id)}
+                classesP={classesP}
               />
             );
           })}
         </div>
       );
+
+      style.backgroundColor='red';
     }
+
+      let classes = [];
+
+      if(this.state.persons.length < 2){
+        classes.push('red')
+      }
+
+      if(this.state.persons.length < 1){
+        classes.push('bold')
+      } 
+
 
     return (
       <div className="App">
         <h1>Hi, I am geroge</h1>
-        <p>This is paragraph</p>
+        <p className={classes.join(' ')}>This is paragraph</p>
         <button style={style} onClick={this.toggleNameHandler}>
           Swith name
         </button>
