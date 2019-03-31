@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classesApp from "./App.module.css";
 import Person from "./person/Person";
+import ErrorBoundary from './ErrorBoundery/ErrorBoundery';
 class App extends Component {
   state = {
     persons: [
@@ -43,16 +44,12 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px'
-    };
 
     let persons = null;
     let classesP = [];
+
+    let btnClass = '';
+
     if (this.state.showPersons) {
       persons = (
         <div>
@@ -60,8 +57,8 @@ class App extends Component {
             if(index % 2 === 0){
               classesP.push('bckcolor')
             }
-            return (
-              <Person
+            return <ErrorBoundary key={person.id}>
+                <Person
                 click={() => this.deletePersonHandler(index)}
                 name={person.name}
                 age={person.age}
@@ -69,12 +66,14 @@ class App extends Component {
                 changed={(event) => this.nameChangeHandler(event,person.id)}
                 classesP={classesP}
               />
-            );
-          })}
+              </ErrorBoundary>
+            }
+          )
+        }
         </div>
       );
-
-      style.backgroundColor='red';
+      btnClass = classesApp.Red;
+      console.log(btnClass);
     }
 
       let classes = [];
@@ -92,7 +91,7 @@ class App extends Component {
       <div className={classesApp.App}>
         <h1>Hi, I am geroge</h1>
         <p className={classes.join(' ')}>This is paragraph</p>
-        <button style={style} onClick={this.toggleNameHandler}>
+        <button className={btnClass} onClick={this.toggleNameHandler}>
           Swith name
         </button>
         {persons}
